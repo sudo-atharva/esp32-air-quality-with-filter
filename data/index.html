@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Air Quality</title>
+<style>
+body{font-family:sans-serif;text-align:center;background:#111;color:#eee;margin:0;padding:16px}
+.v{font-size:4em;margin:.2em}
+button{font-size:1.1em;padding:.6em 1.2em;margin:.3em;border:0;border-radius:8px}
+</style>
+</head>
+<body>
+<h1>Air Quality</h1>
+<div class="v" id="air">--</div>
+<p>Fan: <b id="fan">--</b> (<span id="mode">--</span>)</p>
+<button onclick="go('fan=1')">Fan ON</button>
+<button onclick="go('fan=0')">Fan OFF</button>
+<button onclick="go('mode=auto')">Auto</button>
+<script>
+function show(d){
+  air.textContent=d.air;
+  fan.textContent=d.fan?'ON':'OFF';
+  mode.textContent=d.auto?'AUTO':'MANUAL';
+}
+function go(q){fetch('/api'+(q?'?'+q:'')).then(r=>r.json()).then(show)}
+go();setInterval(go,2000);
+</script>
+</body>
+</html>
